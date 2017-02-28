@@ -1,0 +1,25 @@
+{
+  "name": "free-code-camp-homework",
+  "version": "1.0.0",
+  "description": "## Random Quote Machine  ## Local Weather ## A Wikipedia Viewer",
+  "main": "index.js",
+  "scripts": {
+    "start":"node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/elevenBeans/freeCodeCampHomeWork.git"
+  },
+  "keywords": [
+    "freeCodeCamp"
+  ],
+  "author": "libin",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/elevenBeans/freeCodeCampHomeWork/issues"
+  },
+  "dependencies": {
+    "express": "^4.14.0"
+  },
+  "homepage": "https://github.com/elevenBeans/freeCodeCampHomeWork#readme"
+}
