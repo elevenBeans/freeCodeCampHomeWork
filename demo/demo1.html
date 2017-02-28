@@ -1,0 +1,97 @@
+<!DOCTYPE HTML>
+<!-- this starts off as http://example.com/line?x=5 -->
+<html>
+<head>
+<title>templete</title>
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<script src="http://cdn.bootcss.com/jquery/3.1.1/jquery.min.js"></script>
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=FTNA47Gxd7x1G2uovXFPcyEY"></script>
+</head>
+<body>
+
+<div id="city">Getting your city ...</div>
+<div id="weather">getting temprature ... </div>
+<button id="change">Toggle between Fahrenheit and Celsius.</botton>
+
+
+<script>
+$(document).ready(function(){
+
+  var latitude;
+  var longitude;
+  var isCelsius = true;
+  var celsius;
+  var fahrenheit;
+  navigator.geolocation.getCurrentPosition(function(loc){
+    latitude = loc.coords.latitude;
+    longitude = loc.coords.longitude;
+    console.log(latitude, longitude);
+    getCity(latitude, longitude);
+  });
+
+  $('#change').on('click',function(){
+    if(isCelsius){
+      $('#weather').html('Fahrenheit: '+fahrenheit);
+    }else{
+      $('#weather').html('Celsius: '+ celsius);
+    }
+    isCelsius = !isCelsius;
+  })
+
+  function getCity(longitude, latitude){
+    $.ajax({
+      url:'http://api.map.baidu.com/geocoder/v2/',
+      //url:'https://free-api.heweather.com/v5/now',
+      type: 'GET',
+      data: {
+        location:longitude+'' + ','+latitude+'',
+        output: 'json',
+        ak:'FTNA47Gxd7x1G2uovXFPcyEY'
+      },
+      dataType: 'jsonp',
+
+      success: function(data) {
+        $('#city').html(data.result.addressComponent.city);
+        getWeather(data.result.addressComponent.city);
+      },
+      error: function(err) { alert('erro!') },
+      beforeSend: function(xhr) {}
+    });
+    
+  }
+
+  function getWeather(cityName){
+    cityName = cityName.substr(0,2);
+    $.ajax({
+        url:'http://wthrcdn.etouch.cn/weather_mini',
+        //url:'https://free-api.heweather.com/v5/now',
+        type: 'GET',
+        data: {city:cityName},
+        dataType: 'jsonp',
+
+        success: function(data) {
+          $('#weather').html(data.data.wendu);
+            if(data.data.wendu > 10){
+              $('body').append('<h2>hot</h2>');
+            }else{
+              $('body').append('<h2>cold</h2>');
+            }
+            celsius = ~~$('#weather').html();
+            fahrenheit = CelsiusToFahrenheit(~~$('#weather').html());
+        },
+        error: function(err) { alert('sasss') },
+        beforeSend: function(xhr) {}
+      }
+    );
+  };
+
+  function CelsiusToFahrenheit(num){
+    return num*1.8 + 32;
+  };
+
+});
+
+</script>
+</body>
+</html>
