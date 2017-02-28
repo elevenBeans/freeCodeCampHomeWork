@@ -11,6 +11,7 @@
   <script src="http://cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
 </head>
 <body>
+
 <style>
   html, body{
     background:#000;
@@ -52,11 +53,19 @@
   .content .content-Wrap ul li{
     padding: 9px 0px;
     border-bottom: 1px solid #eee;
-
+  }
+  .content .content-Wrap ul li a{
+    color: #000!important;
+    text-decoration: none;
   }
   .content .content-Wrap ul .title{
     font-size: 20px;
     font-weight: bold;
+        overflow : hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
   }
   .content .content-Wrap ul .summary{
     text-align: left;
@@ -74,13 +83,10 @@
   <div class="content-Wrap">
     <div id="random" class="random"><a href="https://en.wikipedia.org/wiki/Special:Random" target="_blank">Click here for a random article</a></div><br />
     <input type="text" id="title" />
-
   </div>
 </div>
 
 <script>
-
-//  api.php?action=query&titles=Main%20Page&prop=revisions&rvprop=content&format=jsonfm [try in ApiSandbox]
 
 $(document).ready(function(){
   
@@ -100,15 +106,10 @@ $(document).ready(function(){
 
   })
 
-
-
   function searchArticle(title){
-    //https://en.wikipedia.org/w/api.php?callback=jQuery2140704077721983466_1488270434435&format=json&action=query&titles=jack&prop=revisions&rvprop=content&gsrlimit=6&_=1488270434436
-    
-    //https://en.wikipedia.org/w/api.php?format=json&action=query&generator=search&gsrnamespace=0&gsrlimit=2&prop=pageimages|extracts&pilimit=max&exintro&explaintext&exsentences=1&exlimit=max&gsrsearch=jason&callback=angular.callbacks._2
+
     $.ajax({
       url:'https://en.wikipedia.org/w/api.php',
-      //url:'https://free-api.heweather.com/v5/now', 
       type: 'POST',
       data: {
         format: 'json',
@@ -120,7 +121,6 @@ $(document).ready(function(){
         exlimit: 'max',
         gsrsearch: title
       },
-      //headers: { 'Api-User-Agent': 'Example/1.0' },
       dataType: 'jsonp',
       success: function(data) {
         render(data);
@@ -131,27 +131,21 @@ $(document).ready(function(){
   function render(data){
     var _article = data.query && data.query.pages;
     var _articleArry = [];
-    //console.log('article:::',_article);
     for (var key of Object.keys(_article)) {
-      console.log(_article[key]);
       var temp = {
         title: _article[key].title,
-        extract: _article[key].extract || 'no extract'
+        extract: _article[key].extract || 'no extract',
+        pageid: _article[key].pageid
       };
-      console.log('temp:',temp);
       _articleArry.push(temp);
     }
-    
-    console.log( "_articleArry::" + _articleArry);
-    
+        
     var result = '';
     var tmpl = article => `
-        <li><div class="title">${article.title}</div><div class="summary">${article.extract}</div></li>
+        <li><a target="_blank" href="https://en.wikipedia.org/?curid=${article.pageid}"><div class="title">${article.title}</div><div class="summary">${article.extract}</div></a></li>
       `;
 
-    _articleArry.map(function(article){
-      return result += tmpl(article);
-    });
+    _articleArry.map(article => result += tmpl(article));
 
     $('.content-Wrap').append(`<ul>${result}</ul>`);
   }
