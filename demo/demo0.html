@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head lang="zh-cn">
+  <meta charset="utf-8">
+  <meta name="description" content="">
+  <meta name="keywords" content="">
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+  <title>Random Quote Machine </title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-siteapp"/>
+  <script src="http://cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
+</head>
+<body>
+
+<p id='result'></p>
+<button id='get'>getName</button>
+
+<script>  
+
+  $(document).ready(function(){
+    $('#get').on('click',function(){
+      $.ajax({
+          url:'https://api.douban.com/v2/book/1220562', // The URL to the API. You can get this in the API page of the API you intend to consume
+          type: 'GET', // The HTTP Method, can be GET POST PUT DELETE etc
+          data: {}, // Additional parameters here
+          dataType: 'jsonp',
+          success: function(data) {
+            var i = Math.floor(Math.random()*5);
+            $('#result').html(data.tags[i].name); 
+          },
+          error: function(err) {  },
+          beforeSend: function(xhr) {
+
+          }
+      });
+    })
+ });
+
+</script>
+</body>
+</html>
