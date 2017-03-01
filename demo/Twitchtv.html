@@ -11,17 +11,17 @@
 <body>
 <div class="container">
   <div class="row" id="header">
-    <h1>Twitch Streamers</h1>
+    <h1>Twitchtv</h1>
     <div class="menu">
-      <div class="selector active" id="all">
-        <div class="circle"></div><p>All</p>
-      </div>
-      <div class="selector" id="online">
-        <div class="circle"></div><p>Online</p>
-      </div>
-      <div class="selector" id="offline">
-        <div class="circle"></div><p>Offline</p>
-      </div>
+      <span class="selector active" id="all">
+All
+      </span>
+      <span class="selector" id="online">
+Online
+      </span>
+      <span class="selector" id="offline">
+Offline
+      </span>
     </div>
   </div>
   <div id="display">
@@ -30,9 +30,11 @@
   </div>
 </div>
 <script src="http://cdn.bootcss.com/jquery/3.1.1/jquery.min.js"></script>
+
 <script src="./TwitchtvRes/less.min.js"></script>
+
 <script>
-var channels = ["freecodecamp","test_channel","ESL_SC2"];
+var channels = ["ESL_SC2", "OgamingSC2", "cretetion", "freecodecamp", "storbeck", "habathcx", "RobotCaleb", "noobs2ninjas"];
 
 function getChannelInfo() {
   channels.forEach(function(channel) {
