@@ -155,8 +155,34 @@
             .toLowerCase();
       
       return str;
-    }
+    },
+    sym() {
+      var argArr = [];
+      for(var key in arguments){
+        arguments[key] = arguments[key].sort();
+        arguments[key] = [...new Set(arguments[key])];
+        argArr.push(arguments[key]);
+        
+      }
+      return argArr.reduce(function(pre, next){
+        return add(pre, next)
+      });
+      
+      function add(argFirst, argSecond){
+        var total = argFirst.concat(argSecond);
+        var same = argFirst.filter(function(item){
+          return argSecond.indexOf(item) !== -1;
+        });
 
+        var res = total.filter(function(item){
+          return same.indexOf(item) == -1;
+        }); 
+        return res;
+      }
+
+      return argArr;
+    }
+    
   };
 
   window.Argrithm = argrithm;
