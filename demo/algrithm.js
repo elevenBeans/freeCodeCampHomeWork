@@ -139,7 +139,7 @@
       }
       return arr;
     },
-    flatten(arr) {
+    flatten(arr) { //数组扁平化
       var self = this;
       arr = arr.reduce(function(acc, val){
         return acc.concat(Array.isArray(val) ? self.flatten(val) : val)
@@ -156,7 +156,7 @@
       
       return str;
     },
-    sym() {
+    sym() { // Symmetric Difference
       var argArr = [];
       for(var key in arguments){
         arguments[key] = arguments[key].sort();
@@ -182,7 +182,7 @@
 
       return argArr;
     }
-    
+
   };
 
   window.Argrithm = argrithm;
