@@ -181,6 +181,128 @@
       }
 
       return argArr;
+    },
+    checkCashRegister(price, cash, cid) {
+      var change = cash*100 - price*100;
+      // Here is your change, ma'am.
+      var cashInDrawer = 0;
+      var res = [];
+      
+      cid.map(function(item){
+          cashInDrawer += item[1]*100;     
+      });
+      
+      if(change === 0){
+        return 'no change';
+      }
+      function amount(num){
+        console.log('num:', (Math.floor(change/num)*num).toFixed(2));
+        return (Math.floor(change/num)*num).toFixed(2);
+      }
+      if(change > cashInDrawer){
+        return 'Insufficient Funds'; 
+      } else if (change == cashInDrawer) {
+        return 'Closed';
+      } else {
+        if(change >= 10000){
+          if(amount(10000) <= cid[8][1]*100){
+            res.push(['ONE HUNDRED', amount(10000)]);
+            change -= Math.floor(change/10000)*10000;   
+          } else {
+            res.push(['ONE HUNDRED', cid[8][1]*100]);
+            change -= cid[8][1]*100;  
+          }
+
+        }
+        // debugger
+        if(change >= 2000){
+          if(amount(2000) <= cid[7][1]*100){       
+            res.push(['TWENTY', amount(2000)]);
+            change -= Math.floor(change/2000)*2000;
+          } else{
+            res.push(['TWENTY', cid[7][1]*100]);
+            change -= cid[7][1]*100;
+          }
+        }
+        
+        if(change >= 1000){
+          if(amount(1000) <= cid[6][1]*100){ 
+            res.push(['TEN', amount(1000)]);
+            change -= Math.floor(change/1000)*1000;
+          } else {
+            res.push(['TEN', cid[6][1]*100]);
+            change -= cid[6][1]*100;        
+          }
+        }
+        
+        if(change >= 500){  
+          if(amount(500) <= cid[5][1]*100){       
+            res.push(['FIVE', amount(500)]);
+            change -= Math.floor(change/500)*500;
+          } else {
+            res.push(['FIVE', cid[5][1]*100]);
+            change -= cid[5][1]*100;        
+          }
+        }
+        
+        if(change >= 100){
+          if(amount(100) <= cid[4][1]*100){ 
+            res.push(['ONE', amount(100)]);
+            change -= Math.floor(change/100)*100;
+          }else{
+            res.push(['ONE', cid[4][1]*100]);
+            change -= cid[4][1]*100;        
+          }
+        }
+        
+        if(change >= 25){
+          if(amount(25) <= cid[3][1]*100){  
+            res.push(['QUARTER', amount(25)]);
+            change -= Math.floor(change/25)*25;
+          } else{
+            res.push(['QUARTER', cid[3][1]*100]);
+            change -= cid[3][1]*100;
+          }
+        }
+        
+        if(change >= 10){
+          if(amount(10) <= cid[2][1]*100){  
+            res.push(['DIME', amount(10)]);
+            change -= Math.floor(change/10)*10;
+          } else {
+            res.push(['DIME', cid[2][1]*100]);
+            change -= cid[2][1]*100;        
+          }
+        }
+        
+        if(change >= 5){
+          if(amount(5) <= cid[1][1]*100){  
+            res.push(['NICKEL', amount(5)]);
+            change -= Math.floor(change/5)*5;
+          }else{
+            res.push(['NICKEL', cid[1][1]*100]);
+            change -= cid[1][1]*100;        
+          }
+        }
+        
+        if(change >= 1){
+          if(amount(1) <= cid[0][1]*100){  
+            res.push(['PENNY', amount(1)]);
+            change -= Math.floor(change/1)*1;
+          } else {
+            res.push(['PENNY', cid[0][1]*100]);
+            change -= cid[0][1]*100;        
+          }
+        }
+        
+        if(change < 1){
+          res.map(function(item){
+            item[1] = item[1]/100;
+          });
+          return res;
+        }
+        return 'Insufficient Funds';
+      }
     }
 
   };
