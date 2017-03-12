@@ -162,7 +162,6 @@
         arguments[key] = arguments[key].sort();
         arguments[key] = [...new Set(arguments[key])];
         argArr.push(arguments[key]);
-        
       }
       return argArr.reduce(function(pre, next){
         return add(pre, next)
@@ -303,6 +302,33 @@
         }
         return 'Insufficient Funds';
       }
+    },
+
+    updateInventory(arr1, arr2) {
+      // All inventory must be accounted for or you're fired!
+      arr1 = arr1.concat(arr2);
+      
+      var valueArr = [];
+      var res = [];
+      
+      arr1.map(function(item){
+        if(valueArr.indexOf(item[1]) == -1){
+          valueArr.push(item[1]);
+          res.push(item);
+        }else{
+          res.map(function(it){
+            if(it[1] == item[1]){
+              it[0] += item[0];
+            }
+          });
+        }
+      });
+      
+      res = res.sort(function(a, b){
+        return a[1].charAt(0).charCodeAt() - b[1].charAt(0).charCodeAt();
+      });
+      
+      return res;
     }
 
   };
