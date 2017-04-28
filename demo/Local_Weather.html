@@ -6,7 +6,7 @@
 
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=FTNA47Gxd7x1G2uovXFPcyEY"></script>
+<script type="text/javascript" src="//api.map.baidu.com/api?v=2.0&ak=FTNA47Gxd7x1G2uovXFPcyEY"></script>
 </head>
 <body>
 
@@ -42,7 +42,7 @@ $(document).ready(function(){
 
   function getCity(longitude, latitude){
     $.ajax({
-      url:'http://api.map.baidu.com/geocoder/v2/',
+      url:'//api.map.baidu.com/geocoder/v2/',
       //url:'https://free-api.heweather.com/v5/now',
       type: 'GET',
       data: {
@@ -65,7 +65,7 @@ $(document).ready(function(){
   function getWeather(cityName){
     cityName = cityName.substr(0,2);
     $.ajax({
-        url:'http://wthrcdn.etouch.cn/weather_mini',
+        url:'//wthrcdn.etouch.cn/weather_mini',
         //url:'https://free-api.heweather.com/v5/now',
         type: 'GET',
         data: {city:cityName},
