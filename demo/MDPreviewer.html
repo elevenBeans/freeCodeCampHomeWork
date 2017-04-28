@@ -1,0 +1,42 @@
+<!DOCTYPE HTML>
+<!-- this starts off as http://example.com/line?x=5 -->
+<html>
+<head>
+<title>Markdown previewer</title>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+</head>
+<body>
+<style type="text/css">
+	html, body{
+  padding:0px;
+  margin:0px;
+  height:100%;
+}
+.container{
+  display:flex;
+  height:100%;
+}
+.editor,.previewer{
+  flex:1;
+  height:100%;
+  padding:9px;
+  font-size:18px;
+  font-family: Arial;
+}
+.editor{
+  border-right:2px solid #ccc;
+}
+</style>
+<div class="container">
+  <textarea class='editor'></textarea>
+  <div class='previewer'></div>
+</div>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/marked/0.3.6/marked.min.js'></script>
+<script type="text/javascript">
+	$('document').ready(function(){
+  $('.editor').on('input', function(){  $('.previewer').html(marked($('.editor').val()));
+  });
+});
+</script>
+</body>
+</html>
